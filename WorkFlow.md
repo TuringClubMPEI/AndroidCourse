@@ -42,7 +42,7 @@ git checkout -b название_вашей_ветки название_ново
 ```
 название новой ветки должно соответствовать такому шаблону: фамилия транслитом_первая буква имени_hm_номер_домашки
 
-например: fofanov_a_hm_1
+например: fofanov_a_hw_1
 
 ### 5. Выполняем ДЗ на данной ветке.
 
@@ -63,8 +63,17 @@ git push origin branch_name
 
 ### 8. Полезные ссылки:
 
-
+1. [Очень длинный, но полезный урок по гиту][4]
+2. [Урок поменьше][5]
+3. [Официальная документация][6]
+4. [Серия статей на хабре][7]
+5. [Как работать с гитом в Intelji Idea (в Android Studio тоже самое)][8]
 
 [1]: https://git-scm.com/downloads
 [2]: https://brew.sh
 [3]: https://github.com/TuringClubMPEI/AndroidCourse
+[4]: https://www.youtube.com/watch?v=O00FTZDxD0o
+[5]: https://www.youtube.com/watch?v=zZBiln_2FhM
+[6]: https://git-scm.com/docs/gittutorial
+[7]: https://habr.com/ru/post/541258/
+[8]: https://javarush.com/groups/posts/2818-podruzhim-git-s-intellij-idea
