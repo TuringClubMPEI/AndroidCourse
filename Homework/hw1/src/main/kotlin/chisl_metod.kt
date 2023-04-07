@@ -3,7 +3,7 @@ class chisl_metod (var numbers : IntArray)  {
         var minimum = numbers[0]
         val sizeofnumbers = numbers.size-1
         for (i in 1..sizeofnumbers){
-            if(numbers[i]<minimum) minimum = numbers[i]
+            if(numbers[i]<minimum){ minimum = numbers[i]}
         }
         return minimum
     }
@@ -12,7 +12,7 @@ class chisl_metod (var numbers : IntArray)  {
         var maximum = numbers[0]
         val sizeofnumbers = numbers.size-1
         for (i in 1..sizeofnumbers){
-            if(numbers[i]>maximum) maximum = numbers[i]
+            if(numbers[i]>maximum) { maximum = numbers[i]}
         }
         return maximum
     }
