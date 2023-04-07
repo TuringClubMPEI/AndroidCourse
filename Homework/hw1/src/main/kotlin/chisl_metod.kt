@@ -1,30 +1,31 @@
-class chisl_metod (var numbers : IntArray)  {
-    fun minim(): Int {
-        var minimum = numbers[0]
-        val sizeofnumbers = numbers.size-1
-        for (i in 1..sizeofnumbers){
-            if(numbers[i]<minimum){ minimum = numbers[i]}
+class ArrayChange(private val numbers: IntArray) {
+    fun findMinimum(): Int {
+        var minimumOfNumbers = numbers[0]
+        for (i in 1..numbers.size-1) {
+            if (numbers[i] < minimumOfNumbers) {
+                minimumOfNumbers = numbers[i]
+            }
         }
-        return minimum
+        return minimumOfNumbers
     }
 
-    fun maxim(): Int {
-        var maximum = numbers[0]
-        val sizeofnumbers = numbers.size-1
-        for (i in 1..sizeofnumbers){
-            if(numbers[i]>maximum) { maximum = numbers[i]}
+    fun findMaximum(): Int {
+        var maximumOfNumbers = numbers[0]
+        for (i in 1..numbers.size - 1) {
+            if (numbers[i] > maximumOfNumbers) {
+                maximumOfNumbers = numbers[i]
+            }
         }
-        return maximum
+        return maximumOfNumbers
     }
 
     fun sort() {
-        val sizeofnumbers = numbers.size-1
-        for (konec in sizeofnumbers downTo 1) {
-            for (index in 0..konec) {
-                if (numbers[index]>numbers[index+1]) {
+        for (endOfNumbers in numbers.size-1 downTo 1) {
+            for (index in 0..endOfNumbers) {
+                if (numbers[index] > numbers[index + 1]) {
                     val buffer = numbers[index]
-                    numbers[index] = numbers[index+1]
-                    numbers[index+1] = buffer
+                    numbers[index] = numbers[index + 1]
+                    numbers[index + 1] = buffer
                 }
             }
         }
