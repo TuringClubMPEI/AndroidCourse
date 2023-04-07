@@ -12,25 +12,29 @@ fun main(args: Array<String>) {
 
 class ArrayTools(private val array: IntArray = intArrayOf()){
     fun findMin(): Int {
-        var minimum = array[0];
-        for (i in array.drop(1))
-            if (i < minimum)
-                minimum = i
-        return minimum
+        var maxValue = array[0];
+        for (i in array.drop(1)) {
+            if (i < maxValue) {
+                maxValue = i
+            }
+        }
+        return maxValue
     }
 
     fun getValue(): IntArray {
         return array
     }
     fun findMax(): Int {
-        var maximum = array[0];
-        for (i in array.drop(1))
-            if (i > maximum)
-                maximum = i
-        return maximum
+        var minValue = array[0];
+        for (i in array.drop(1)) {
+            if (i > minValue) {
+                minValue = i
+            }
+        }
+        return minValue
     }
 
-    fun sort() {
+    fun sort(){
         for (i in 0 until array.size - 1) {
             for (j in 0 until array.size - i - 1) {
                 if (array[j] > array[j + 1]) {
