@@ -10,35 +10,35 @@ fun main(args: Array<String>) {
     println("Отсортированный массив: " + t.getValue().contentToString())
 }
 
-class ArrayTools(private val x: IntArray = intArrayOf()){
+class ArrayTools(private val array: IntArray = intArrayOf()){
     fun findMin(): Int {
-        var res = x[0];
-        for (i in x.drop(1)) {
-            if (i < res) {
-                res = i
+        var maxValue = array[0];
+        for (i in array.drop(1)) {
+            if (i < maxValue) {
+                maxValue = i
             }
         }
-        return res
+        return maxValue
     }
 
     fun getValue(): IntArray {
-        return x
+        return array
     }
     fun findMax(): Int {
-        var res = x[0];
-        for (i in x.drop(1)) {
-            if (i > res) {
-                res = i
+        var minValue = array[0];
+        for (i in array.drop(1)) {
+            if (i > minValue) {
+                minValue = i
             }
         }
-        return res
+        return minValue
     }
 
     fun sort(){
-        for (i in 0 until x.size - 1) {
-            for (j in 0 until x.size - i - 1) {
-                if (x[j] > x[j + 1]) {
-                    x[j] = x[j + 1].also { x[j + 1] = x[j] }
+        for (i in 0 until array.size - 1) {
+            for (j in 0 until array.size - i - 1) {
+                if (array[j] > array[j + 1]) {
+                    array[j] = array[j + 1].also { array[j + 1] = array[j] }
                 }
             }
         }
