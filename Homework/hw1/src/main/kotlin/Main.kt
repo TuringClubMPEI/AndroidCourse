@@ -1,38 +1,42 @@
 fun main(args: Array<String>) {
     print("Введите целочисленный массив через пробел: ")
     val arr = readln().split(' ').map { it.toInt() }.toIntArray()
-    val t = ArrayTools(arr)
+    val t = ArrayTools(arr.clone())
     println("Исходный массив: " + arr.contentToString())
     println("Минимум: " + t.findMin())
     println("Максимум: " + t.findMax())
 
-    val sortedArr = t.sortArr()
-    println("Отсортированный массив: " + sortedArr.contentToString())
+    t.sort()
+    println("Отсортированный массив: " + t.getValue().contentToString())
 }
 
-class ArrayTools(val x: IntArray = intArrayOf()){
+class ArrayTools(private val array: IntArray = intArrayOf()){
     fun findMin(): Int {
-        var res = x[0];
-        for (i in x.drop(1))
-            if (i < res)
-                res = i
-        return res
+        var minimum = array[0];
+        for (i in array.drop(1))
+            if (i < minimum)
+                minimum = i
+        return minimum
     }
 
+    fun getValue(): IntArray {
+        return array
+    }
     fun findMax(): Int {
-        var res = x[0];
-        for (i in x.drop(1))
-            if (i > res)
-                res = i
-        return res
+        var maximum = array[0];
+        for (i in array.drop(1))
+            if (i > maximum)
+                maximum = i
+        return maximum
     }
 
-    fun sortArr(): IntArray {
-        val tmp = x.clone()
-        for (i in 0 until tmp.size - 1)
-            for (j in 0 until tmp.size - i - 1)
-                if (tmp[j] > tmp[j + 1])
-                    tmp[j] = tmp[j + 1].also { tmp[j + 1] = tmp[j] }
-        return tmp
+    fun sort() {
+        for (i in 0 until array.size - 1) {
+            for (j in 0 until array.size - i - 1) {
+                if (array[j] > array[j + 1]) {
+                    array[j] = array[j + 1].also { array[j + 1] = array[j] }
+                }
+            }
+        }
     }
 }
