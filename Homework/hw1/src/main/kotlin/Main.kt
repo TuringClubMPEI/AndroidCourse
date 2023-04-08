@@ -3,7 +3,7 @@ fun main() {
     val sample = Hw1()
     sample.min()
     sample.max()
-    sample.sort_max()
+    sample.sortmax()
 }
 class Hw1{
     fun min(){ //поиск минимального элемента
@@ -36,7 +36,7 @@ class Hw1{
         println("\nМаксимальный элемент массива: $maxim")
     }
 
-    fun sort_max(){ //функция сортировки пузырьком
+    fun sortmax(){ //функция сортировки пузырьком
         val numbers: Array<Int> = arrayOf(29, 9 , -10, 0, -200, 37, 7, -7, -11, -6)
         print("Исходный массив: ")
         for (num in numbers){
