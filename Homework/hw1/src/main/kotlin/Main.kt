@@ -35,6 +35,7 @@ class Problem(){
 }
 
 fun main() {
+
     val pusk = Problem()
 
     pusk.min()
