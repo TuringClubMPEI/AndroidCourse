@@ -52,8 +52,8 @@ class ArrayTools(num: Array<Int>) {
     fun sort() { //функция сортировки пузырьком
 
         var buff: Int
-        for (i in 0..8) {
-            for (j in 0..8 - i) {
+        for (i in 0..mas.size-2) {
+            for (j in 0..mas.size-2 - i) {
                 if (mas[j] > mas[j + 1]) {
                     buff = mas[j]
                     mas[j] = mas[j + 1]
