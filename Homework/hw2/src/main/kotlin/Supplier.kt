@@ -4,19 +4,46 @@
  * Здесь можно определять только методы, общие для обоих поставщиков
  */
 interface Supplier {
+    val clientStorage: Storage
+    val typeOfFurniture: List<String>
+    val companyName: String
 
-    /**
-     * Пример метода, который может быть в интерфейсе поставщика
-     * Нужно добавить еще несколько методов
-     */
-    fun getFurniture()
+    fun getFurniture(){
+        println("$typeOfFurniture")
+    }
+
+    fun addFurniture(itemToAdd: String){
+        if (itemToAdd in typeOfFurniture) {
+            clientStorage.stockRoom.add(itemToAdd)
+        }
+        else{
+            println("Компания $companyName не поставляет $itemToAdd")
+        }
+    }
+
 }
 
-/**
- * Пример реализации для создания класса поставщика
- * class MoscowFurniture : Supplier {
- *     override fun getFurniture() {
- *     // написать специфическую реализацию
- *     }
- * }
- */
+class Supplier2(x: List<String>, s: String, t: Storage) : Supplier {
+    override val typeOfFurniture = x
+    override val companyName = s
+    override val clientStorage = t
+
+    override fun toString(): String {
+        return "$companyName поставляет $typeOfFurniture"
+    }
+
+    fun addNamedFurniture(name: String){
+        clientStorage.stockRoom.add(typeOfFurniture[0] + " для $name от компании $companyName")
+    }
+
+}
+
+class Supplier1(x: List<String>, s: String, t: Storage) : Supplier {
+    override val typeOfFurniture = x
+    override val companyName = s
+    override val clientStorage = t
+
+    override fun toString(): String {
+        return "$companyName поставляет $typeOfFurniture"
+    }
+}
