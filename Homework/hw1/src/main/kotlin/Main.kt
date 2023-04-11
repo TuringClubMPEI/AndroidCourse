@@ -1,8 +1,8 @@
 import java.util.*
 
-class Arraytools(var size: Int, var base: IntArray = IntArray(size)) {
+class Arraytools(private val size: Int, private val base: IntArray = IntArray(size)) {
 
-    fun Input_array() {
+    fun inputArray() {
         base.forEachIndexed { index, i ->
             println("Ввод ${index + 1}) элемента ")
             val scan = Scanner(System.`in`)
@@ -11,7 +11,7 @@ class Arraytools(var size: Int, var base: IntArray = IntArray(size)) {
         }
     }
 
-    fun Search_min(): Int {
+    fun searchMin(): Int {
         var minValue = base[0]
         for (i in base.drop(1)) {
             if (i < minValue) {
@@ -21,7 +21,7 @@ class Arraytools(var size: Int, var base: IntArray = IntArray(size)) {
         return minValue
     }
 
-    fun Search_max(): Int {
+    fun searchMax(): Int {
         var maxValue = base[0]
         for (i in base.drop(1)) {
             if (i > maxValue) {
@@ -31,7 +31,7 @@ class Arraytools(var size: Int, var base: IntArray = IntArray(size)) {
         return maxValue
     }
 
-    fun Sort_array() {
+    fun sortArray() {
         for (i in 0 until base.size - 1) {
             for (j in 0 until base.size - i - 1) {
                 if (base[j] > base[j + 1]) {
@@ -41,7 +41,7 @@ class Arraytools(var size: Int, var base: IntArray = IntArray(size)) {
         }
     }
 
-    fun Output_array() {
+    fun outputArray() {
         for (number in base) {
             print("$number \t")
         }
@@ -54,11 +54,11 @@ fun main() {
     val size_array = scan.nextInt() // для целых
     var Array = Arraytools(size_array)
 
-    Array.Input_array()
-    println("Минимальное число массива ${Array.Search_min()}")
-    println("Максимальное число массива ${Array.Search_max()}")
+    Array.inputArray()
+    println("Минимальное число массива ${Array.searchMin()}")
+    println("Максимальное число массива ${Array.searchMax()}")
 
     println("Отсортированный массив ")
-    Array.Sort_array()
-    Array.Output_array()
+    Array.sortArray()
+    Array.outputArray()
 }
