@@ -1,6 +1,5 @@
 import java.util.*
 
-
 class Arraytools(var size: Int, var base: IntArray = IntArray(size)) {
 
     fun Input_array() {
