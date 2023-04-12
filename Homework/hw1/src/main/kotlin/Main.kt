@@ -4,8 +4,8 @@ fun main() {
     val sample = ArrayTools(numbers)
     print("Исходный массив: ")
     sample.output()
-    sample.getMin()
-    sample.getMax()
+    sample.outputMin()
+    sample.outputMax()
     sample.sort()
     print("Массив после сортировки:")
     sample.output()
@@ -31,9 +31,8 @@ class ArrayTools(private val arr: Array<Int>) {
         return testValue
     }
 
-    fun getMin() {
-        val minimal: Int = min()
-        println("Минимальное значение массива: $minimal ")
+    fun outputMin() {
+        println("Минимальное значение массива: ${min()} ")
 
     }
 
@@ -48,9 +47,8 @@ class ArrayTools(private val arr: Array<Int>) {
         return testValue
     }
 
-    fun getMax() {
-        val maximum: Int = max()
-        println("Максимальное значение массива: $maximum")
+    fun outputMax() {
+        println("Максимальное значение массива: ${max()}")
     }
 
     fun sort() { //функция сортировки пузырьком
