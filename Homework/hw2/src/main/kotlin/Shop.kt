@@ -2,25 +2,25 @@
  * Интерфейс для магазина, при помощи которого с ним можно взаимодействовать
  */
 interface Shop {
-    val storage: Storage
+    fun buyFurniture(itemToBuy: String): Boolean
 
-    fun buyFurniture(itemToBuy: String): String {
-        return if (itemToBuy in storage.stockRoom) {
-            storage.delFurniture(itemToBuy)
-            "Успешно куплен предмет '$itemToBuy'"
-        } else {
-            "Покупка невозможна, товар '$itemToBuy' отсутствует на складе"
-        }
+    fun getFurniture(): String
+}
+
+class Ikea(private val store: Store) : Shop {
+    override fun buyFurniture(itemToBuy: String): Boolean {
+        return if (store.inStorage(itemToBuy)) {
+            store.delFurniture(itemToBuy)
+            true
+        } else false
     }
 
-    fun getFurniture(): List<String> {
-        return storage.getFurniture()
+    override fun getFurniture(): String {
+        return store.getFurniture()
     }
 }
 
-class Ikea(st: Store) : Shop{
-    override val storage = st
-}
+
 
 
 

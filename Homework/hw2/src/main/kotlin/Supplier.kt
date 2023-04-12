@@ -4,46 +4,59 @@
  * Здесь можно определять только методы, общие для обоих поставщиков
  */
 interface Supplier {
-    val clientStorage: Storage
-    val typeOfFurniture: List<String>
-    val companyName: String
 
-    fun getFurniture(){
-        println("$typeOfFurniture")
+    fun getFurniture(): String
+
+    fun addFurniture(itemToAdd: String): Boolean
+
+}
+
+class ParisSupplier(
+    private val clientStorage: Storage,
+    private val typesOfFurniture: List<String>,
+    private val companyName: String
+) : Supplier {
+    override fun getFurniture(): String {
+        return "$typesOfFurniture"
     }
 
-    fun addFurniture(itemToAdd: String){
-        if (itemToAdd in typeOfFurniture) {
-            clientStorage.stockRoom.add(itemToAdd)
-        }
-        else{
-            println("Компания $companyName не поставляет $itemToAdd")
-        }
+    override fun addFurniture(itemToAdd: String): Boolean {
+        return if (itemToAdd in typesOfFurniture) {
+            clientStorage.addFurniture(itemToAdd)
+            true
+        } else false
+    }
+
+    override fun toString(): String {
+        return "$companyName поставляет $typesOfFurniture"
+    }
+
+    fun addNamedFurniture(itemToAdd: String, name: String): Boolean {
+        return if (itemToAdd in typesOfFurniture) {
+            clientStorage.addFurniture("$itemToAdd для $name от компании $companyName")
+            true
+        } else false
     }
 
 }
 
-class Supplier2(x: List<String>, s: String, t: Storage) : Supplier {
-    override val typeOfFurniture = x
-    override val companyName = s
-    override val clientStorage = t
-
-    override fun toString(): String {
-        return "$companyName поставляет $typeOfFurniture"
+class MoscowSupplier(
+    private val clientStorage: Storage,
+    private val typesOfFurniture: List<String>,
+    private val companyName: String
+) : Supplier {
+    override fun getFurniture(): String {
+        return "$typesOfFurniture"
     }
 
-    fun addNamedFurniture(name: String){
-        clientStorage.stockRoom.add(typeOfFurniture[0] + " для $name от компании $companyName")
+    override fun addFurniture(itemToAdd: String): Boolean {
+        return if (itemToAdd in typesOfFurniture) {
+            clientStorage.addFurniture(itemToAdd)
+            true
+        } else false
     }
 
-}
-
-class Supplier1(x: List<String>, s: String, t: Storage) : Supplier {
-    override val typeOfFurniture = x
-    override val companyName = s
-    override val clientStorage = t
-
     override fun toString(): String {
-        return "$companyName поставляет $typeOfFurniture"
+        return "$companyName поставляет $typesOfFurniture"
     }
 }

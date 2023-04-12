@@ -5,25 +5,27 @@
 
 fun main(args: Array<String>) {
     val store = Store(mutableListOf())
-    val s1 = Supplier1(listOf("Стул", "Стол"), "Поставщик 1", store)
-    val s2 = Supplier2(listOf("Кресло"), "Поставщик 2", store)
-    val i =  Ikea(store)
+    val s1 = ParisSupplier(store, listOf("стул", "стол"), "Paris Company LTD")
+    val s2 = MoscowSupplier(store, listOf("кресло"), "Moscow shit")
+    val t = Ikea(store)
 
-    s1.addFurniture("Кровать")  // Заполняем склад
-    s1.addFurniture("Стул")
-    s1.addFurniture("Стул")
-    s1.addFurniture("Стул")
-    s1.addFurniture("Стол")
+    if (s1.addFurniture("стул")) {
+        println("Успешно поставлен товар на склад")
+    } else println(s1.toString())
 
-    println(i.getFurniture()) // Выводим содержимое склада
+    if (s2.addFurniture("стул")) {
+        println("Успешно поставлен товар на склад")
+    } else println(s2.toString())
 
-    println(i.buyFurniture("Кровать")) // Покупка несуществующего товара
-    println(i.buyFurniture("Стул")) // Покупка товара
-    println(i.getFurniture()) // Выводим содержимое склада
+    if (s1.addNamedFurniture("стул", "Руслан")) {
+        println("Успешно поставлен именной товар на склад")
+    } else println(s1.toString())
 
-    s2.addNamedFurniture("Руслан") // Добавляем именной товар
-    println(i.getFurniture()) // Выводим содержимое склада
+    println(t.getFurniture())
 
-    println(i.buyFurniture("Кресло для Руслан от компании Поставщик 2")) // Покупаем именной товар
-    println(i.getFurniture()) // Выводим содержимое склада
+    if (t.buyFurniture("стул для Руслан от компании Paris Company LTD")) {
+        println("Успешная покупка")
+    } else println("Товар отсутсвует на складе")
+
+    println(t.getFurniture())
 }
