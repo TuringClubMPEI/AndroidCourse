@@ -3,28 +3,26 @@
  * Магазин будет взаимодействовать со складом через этот интерфейс
  */
 interface Storage {
-    fun getFurnitureInfo(): Array<Int>
-    fun putFurniture(furnitureType: Int, countFurniture: Int)
-    fun exportFurnitureFronStorage(furnitureType: Int, countFurniture: Int): String
+    fun getProductInfo(): Array<Int>
+    fun putProduct(countProduct: Int, productType: Int)
+    fun exportProductFromStorage(countProduct: Int, productType: Int): String
 }
 
-class furnitureStorage : Storage {
+class FurnitureStorage : Storage {
 
-    private var furniture: Array<Int> = arrayOf(0, 0, 0)
-    override fun getFurnitureInfo(): Array<Int> {
-        return furniture
+    private val furniture = arrayOf(0, 0, 0)
+    override fun getProductInfo(): Array<Int> = furniture
+
+    override fun exportProductFromStorage(countProduct: Int, productType: Int): String {
+        if (furniture[productType] >= countProduct) {
+            furniture[productType] -= countProduct
+            return Feedback.Ok.message
+        } else
+            return Feedback.Error.message
+
     }
 
-    override fun exportFurnitureFronStorage(furnitureType: Int, countFurniture: Int): String {
-        if (furniture[furnitureType] >= countFurniture) {
-            furniture[furnitureType] -= countFurniture
-            return "Ok"
-        } else {
-            return "Error"
-        }
-    }
-
-    override fun putFurniture(furnitureType: Int, countFurniture: Int) {
-        furniture[furnitureType] += countFurniture
+    override fun putProduct(countProduct: Int, productType: Int) {
+        furniture[productType] += countProduct
     }
 }

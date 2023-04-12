@@ -1,25 +1,31 @@
 /**
  * Интерфейс для магазина, при помощи которого с ним можно взаимодействовать
  */
+enum class Feedback(val message: String) {
+    Ok("Ok"),
+    Error("Error"),
+    BoughtSuccessful("Bought Successful"),
+    BoughtUnsuccessful("Bought Unsuccessful")
+}
+
 interface Shop {
-    fun boughtFurniture(furnitureType: Int, furnitureCount: Int): String
+    fun boughtProduct(productCount: Int, productType: Int): String
     fun storageInfo()
 }
 
-class furnitureShop(private val storage: Storage) : Shop {
+class FurnitureShop(private val storage: Storage) : Shop {
 
-    override fun boughtFurniture(furnitureType: Int, furnitureCount: Int): String {
-        if (storage.exportFurnitureFronStorage(furnitureType - 1, furnitureCount) == "Ok") {
-            return "Bought successful"
+    override fun boughtProduct(productCount: Int, productType: Int): String {
+        if (storage.exportProductFromStorage(productCount, productType - 1) == "Ok") {
+            return Feedback.BoughtSuccessful.message
         } else
-            return "Bought unsuccessful: isn't so much furniture"
+            return Feedback.BoughtUnsuccessful.message
     }
 
     override fun storageInfo() {
-        val info = storage.getFurnitureInfo()
+        val info = storage.getProductInfo()
 
-        for (i in 0 until info.size) {
-            val el = info[i]
+        for ((i, el) in info.withIndex()) {
             println("Furniture Type $i: $el")
         }
     }

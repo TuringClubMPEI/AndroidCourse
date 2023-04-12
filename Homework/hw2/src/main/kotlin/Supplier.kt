@@ -9,8 +9,9 @@ interface Supplier {
      * Пример метода, который может быть в интерфейсе поставщика
      * Нужно добавить еще несколько методов
      */
-    fun putFurnitureIntoStorage(storage: Storage, furnitureType: Int, countFurniture: Int): String
+    fun getProduct(countProduct: Int, productType: Int): Int
     fun printNameSupplier()
+    fun putProduct(countProduct: Array<Int>)
 }
 
 /**
@@ -24,32 +25,48 @@ interface Supplier {
 
 class MoscowSupplier : Supplier {
     private val name = "Moscow Supplier"
+    private val product = arrayOf(0, 0)
     override fun printNameSupplier() {
         println(name)
     }
 
-    override fun putFurnitureIntoStorage(storage: Storage, furnitureType: Int, countFurniture: Int): String {
-        if ((furnitureType == 1 || furnitureType == 2) && countFurniture >= 0) {
-            storage.putFurniture(furnitureType - 1, countFurniture)
-            return "Putting Success"
+    override fun getProduct(countProduct: Int, productType: Int): Int {
+        if (product[productType - 1] >= countProduct) {
+            product[productType - 1] -= countProduct
+            return countProduct
         }
-        else
-            return "Putting Error"
+        return 0
+    }
+
+    override fun putProduct(countProduct: Array<Int>) {
+        for ((i, el) in countProduct.withIndex()) {
+            product[i] += el
+            if (i >= product.size)
+                break
+        }
     }
 }
 
 class KazanSupplier : Supplier {
     private val name = "Kazan Supplier"
+    private val product = arrayOf(0)
     override fun printNameSupplier() {
         println(name)
     }
 
-    override fun putFurnitureIntoStorage(storage: Storage, furnitureType: Int, countFurniture: Int): String {
-        if (furnitureType == 3 && countFurniture >= 0) {
-            storage.putFurniture(furnitureType - 1, countFurniture)
-            return "Putting Success"
+    override fun getProduct(countProduct: Int, productType: Int): Int {
+        if (product[productType - 1] >= countProduct) {
+            product[productType - 1] -= countProduct
+            return countProduct
         }
-        else
-            return "Putting Error"
+        return 0
+    }
+
+    override fun putProduct(countProduct: Array<Int>) {
+        for ((i, el) in countProduct.withIndex()) {
+            product[i] += el
+            if (i >= product.size)
+                break
+        }
     }
 }

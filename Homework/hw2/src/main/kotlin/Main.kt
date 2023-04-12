@@ -4,18 +4,21 @@
  */
 
 fun main(args: Array<String>) {
-    val storage: Storage = furnitureStorage()
-    val suppl1 : Supplier = MoscowSupplier()
-    val suppl2 : Supplier = KazanSupplier()
-    val shop : Shop = furnitureShop(storage)
+    val storage: Storage = FurnitureStorage()
+    val moscowSuppllier: Supplier = MoscowSupplier()
+    val kazanSuppllier: Supplier = KazanSupplier()
+    val shop: Shop = FurnitureShop(storage)
 
-    println(suppl1.putFurnitureIntoStorage(storage, 1, 100))
-    println(suppl1.putFurnitureIntoStorage(storage, 2, 50))
-    println(suppl2.putFurnitureIntoStorage(storage, 3, 200))
-    suppl1.printNameSupplier()
-    suppl2.printNameSupplier()
+    moscowSuppllier.putProduct(arrayOf(100, 200))
+    kazanSuppllier.putProduct(arrayOf(300))
+    moscowSuppllier.printNameSupplier()
+    kazanSuppllier.printNameSupplier()
+    storage.putProduct(moscowSuppllier.getProduct(70, 1), 0)
+    storage.putProduct(moscowSuppllier.getProduct(130, 2), 1)
+    storage.putProduct(kazanSuppllier.getProduct(260, 1), 2)
     shop.storageInfo()
-    println(shop.boughtFurniture(2, 30))
-    println(shop.boughtFurniture(3, 230))
+    shop.boughtProduct(60, 1)
+    shop.boughtProduct(90, 2)
+    shop.boughtProduct(190, 3)
     shop.storageInfo()
 }
