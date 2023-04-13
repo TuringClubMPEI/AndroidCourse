@@ -5,18 +5,58 @@
  */
 interface Supplier {
 
-    /**
-     * Пример метода, который может быть в интерфейсе поставщика
-     * Нужно добавить еще несколько методов
-     */
-    fun getFurniture()
+    fun getFurniture(): String
+
+    fun addFurniture(itemToAdd: String): Boolean
+
 }
 
-/**
- * Пример реализации для создания класса поставщика
- * class MoscowFurniture : Supplier {
- *     override fun getFurniture() {
- *     // написать специфическую реализацию
- *     }
- * }
- */
+class ParisSupplier(
+    private val clientStorage: Storage,
+    private val typesOfFurniture: List<String>,
+    private val companyName: String
+) : Supplier {
+    override fun getFurniture(): String {
+        return "$typesOfFurniture"
+    }
+
+    override fun addFurniture(itemToAdd: String): Boolean {
+        return if (itemToAdd in typesOfFurniture) {
+            clientStorage.addFurniture(itemToAdd)
+            true
+        } else false
+    }
+
+    override fun toString(): String {
+        return "$companyName поставляет $typesOfFurniture"
+    }
+
+    fun addNamedFurniture(itemToAdd: String, name: String): Boolean {
+        return if (itemToAdd in typesOfFurniture) {
+            clientStorage.addFurniture("$itemToAdd для $name от компании $companyName")
+            true
+        } else false
+    }
+
+}
+
+class MoscowSupplier(
+    private val clientStorage: Storage,
+    private val typesOfFurniture: List<String>,
+    private val companyName: String
+) : Supplier {
+    override fun getFurniture(): String {
+        return "$typesOfFurniture"
+    }
+
+    override fun addFurniture(itemToAdd: String): Boolean {
+        return if (itemToAdd in typesOfFurniture) {
+            clientStorage.addFurniture(itemToAdd)
+            true
+        } else false
+    }
+
+    override fun toString(): String {
+        return "$companyName поставляет $typesOfFurniture"
+    }
+}
