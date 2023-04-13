@@ -5,27 +5,27 @@
 
 fun main(args: Array<String>) {
     val store = Store(mutableListOf())
-    val s1 = ParisSupplier(store, listOf("стул", "стол"), "Paris Company LTD")
-    val s2 = MoscowSupplier(store, listOf("кресло"), "Moscow shit")
-    val t = Ikea(store)
+    val supplier1 = ParisSupplier(store, listOf("стул", "стол"), "Paris Company LTD")
+    val supplier2 = MoscowSupplier(store, listOf("кресло"), "Moscow shit")
+    val myShop = Ikea(store)
 
-    if (s1.addFurniture("стул")) {
+    if (supplier1.addFurniture("стул")) {
         println("Успешно поставлен товар на склад")
-    } else println(s1.toString())
+    } else println(supplier1.toString())
 
-    if (s2.addFurniture("стул")) {
+    if (supplier2.addFurniture("стул")) {
         println("Успешно поставлен товар на склад")
-    } else println(s2.toString())
+    } else println(supplier2.toString())
 
-    if (s1.addNamedFurniture("стул", "Руслан")) {
+    if (supplier1.addNamedFurniture("стул", "Руслан")) {
         println("Успешно поставлен именной товар на склад")
-    } else println(s1.toString())
+    } else println(supplier1.toString())
 
-    println(t.getFurniture())
+    println(myShop.getFurniture())
 
-    if (t.buyFurniture("стул для Руслан от компании Paris Company LTD")) {
+    if (myShop.buyFurniture("стул для Руслан от компании Paris Company LTD")) {
         println("Успешная покупка")
     } else println("Товар отсутсвует на складе")
 
-    println(t.getFurniture())
+    println(myShop.getFurniture())
 }

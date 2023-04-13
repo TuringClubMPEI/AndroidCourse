@@ -7,7 +7,7 @@ interface Storage {
 
     fun inStorage(itemToCheck: String): Boolean
 
-    fun delFurniture(itemToDel: String): Boolean
+    fun deleteFurniture(itemToDel: String): Boolean
 
     fun addFurniture(itemToAdd: String)
 }
@@ -21,7 +21,7 @@ class Store(private val stockRoom: MutableList<String>) : Storage {
         return itemToCheck in stockRoom
     }
 
-    override fun delFurniture(itemToDel: String): Boolean {
+    override fun deleteFurniture(itemToDel: String): Boolean {
         return if (itemToDel in stockRoom) {
             stockRoom.remove(itemToDel)
             true

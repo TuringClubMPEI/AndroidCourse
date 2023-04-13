@@ -7,10 +7,10 @@ interface Shop {
     fun getFurniture(): String
 }
 
-class Ikea(private val store: Store) : Shop {
+class Ikea(private val store: Storage) : Shop {
     override fun buyFurniture(itemToBuy: String): Boolean {
         return if (store.inStorage(itemToBuy)) {
-            store.delFurniture(itemToBuy)
+            store.deleteFurniture(itemToBuy)
             true
         } else false
     }
