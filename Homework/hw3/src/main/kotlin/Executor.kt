@@ -1,6 +1,9 @@
+import java.beans.Expression
+
 interface Executor {
 
-    fun setOperation(operation: (a: Double, b: Double) -> Double)
+    fun setOperation(sign: Char, operation: (a: Double, b: Double) -> Double)
 
-    fun execute(a: Double, b: Double): Double
+    fun execute(sign: Char, a: Double, b: Double): Double?
+
 }
