@@ -1,5 +1,3 @@
-import java.beans.Expression
-
 interface Executor {
 
     fun setOperation(sign: Char, operation: (a: Double, b: Double) -> Double)
