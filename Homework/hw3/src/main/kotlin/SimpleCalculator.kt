@@ -4,7 +4,7 @@ import java.lang.ArithmeticException
 import java.util.Stack
 import java.lang.IllegalArgumentException
 
-enum class AllCalculationException(val message: String) {
+enum class Message(val message: String) {
     exceptionFirstNotNumber("Не может операция стоять на первом месте"),
     exceptionErrorBeforOperaion("Не может идти перед операцией что-то кроме числа и закрывающей скобки"),
     exceptionLastOperation("Не может операция идти последней"),
@@ -19,7 +19,6 @@ enum class AllCalculationException(val message: String) {
     exceptionNotNumberAfterOpenBracket("Не может после открывающей скобки стоять не цифра")
 }
 
-
 class SimpleCalculator : Executor {
     private val operations = mutableMapOf<Char, (Double, Double) -> Double>()
     override fun addOperation(name: Char, operation: (a: Double, b: Double) -> Double) {
@@ -32,50 +31,55 @@ class SimpleCalculator : Executor {
 
 class Parser {
     private val priorityOperation = mutableMapOf<Char, Int>(Pair('+', 1), Pair('-', 1), Pair('*', 2), Pair('/', 2))
+    private val operators = arrayOf('+', '-', '*', '/')
 
-    fun checkExpression(expression: String): String {
+    fun checkExpression(expression: String) {
         val rightBracketSubsequence = Stack<Char>()
 
         for ((i, el) in expression.withIndex()) {
-            if (el == '+' || el == '-' || el == '/' || el == '*') {
-                if (i == 0)
-                    return AllCalculationException.exceptionFirstNotNumber.message
-                if (!expression[i - 1].isDigit() && expression[i - 1] != ')')
-                    return AllCalculationException.exceptionErrorBeforOperaion.message
-                if (i == expression.length - 1)
-                    return AllCalculationException.exceptionLastOperation.message
-                if (!expression[i + 1].isDigit() && expression[i + 1] != '(')
-                    return AllCalculationException.exceptionErrorAfterOperation.message
-                if (el == '/' && expression[i + 1] == '0')
-                    return AllCalculationException.exceptionNullDivide.message
+            if (el in operators) {
+                when {
+                    i == 0 -> throw IllegalArgumentException(Message.exceptionFirstNotNumber.message)
+                    !expression[i - 1].isDigit() && expression[i - 1] != ')' -> throw IllegalArgumentException(
+                        Message.exceptionErrorBeforOperaion.message
+                    )
+
+                    i == expression.length - 1 -> throw IllegalArgumentException(Message.exceptionLastOperation.message)
+                    !expression[i + 1].isDigit() && expression[i + 1] != '(' -> throw IllegalArgumentException(
+                        Message.exceptionErrorAfterOperation.message
+                    )
+
+                    el == '/' && expression[i + 1] == '0' -> throw ArithmeticException(Message.exceptionNullDivide.message)
+                }
             }
             if (el == ')') {
-                if (rightBracketSubsequence.empty())
-                    return AllCalculationException.exceptionWrongBracketSubsequence.message
-                if (rightBracketSubsequence.peek() != '(')
-                    return AllCalculationException.exceptionWrongBracketSubsequence.message
-                if (rightBracketSubsequence.peek() == '(')
-                    rightBracketSubsequence.pop()
-                if (i == 0)
-                    return AllCalculationException.exceptionCloseBracketOnFirstPosition.message
-                if (i < expression.length - 1 && expression[i + 1] != '+' && expression[i + 1] != '-' && expression[i + 1] != '*' && expression[i + 1] != '/' && expression[i - 1] != ')' && expression[i - 1] != '(')
-                    return AllCalculationException.exceptionErrorAfterCloseBracket.message
-                if (i > 0 && !expression[i - 1].isDigit())
-                    return AllCalculationException.exceptionNotNumberBeforeCloseBracket.message
+                when {
+                    rightBracketSubsequence.empty() -> throw IllegalArgumentException(Message.exceptionWrongBracketSubsequence.message)
+                    rightBracketSubsequence.peek() != '(' -> throw IllegalArgumentException(Message.exceptionWrongBracketSubsequence.message)
+                    rightBracketSubsequence.peek() == '(' -> rightBracketSubsequence.pop()
+                    i == 0 -> throw IllegalArgumentException(Message.exceptionCloseBracketOnFirstPosition.message)
+                    i < expression.length - 1 && expression[i - 1] !in operators && expression[i - 1] != ')' && expression[i - 1] != '(' -> throw IllegalArgumentException(
+                        Message.exceptionErrorAfterCloseBracket.message
+                    )
+
+                    i > 0 && !expression[i - 1].isDigit() -> throw IllegalArgumentException(Message.exceptionNotNumberBeforeCloseBracket.message)
+                }
             }
             if (el == '(') {
                 rightBracketSubsequence.push(el)
-                if (i > 0 && expression[i - 1] != '+' && expression[i - 1] != '-' && expression[i - 1] != '*' && expression[i - 1] != '/' && expression[i - 1] != ')' && expression[i - 1] != '(')
-                    return AllCalculationException.exceptionErrorBeforeOpenBracket.message
-                if (i == expression.length - 1)
-                    return AllCalculationException.exceptionOpenBracketLast.message
-                if (!expression[i + 1].isDigit())
-                    return AllCalculationException.exceptionNotNumberAfterOpenBracket.message
+                when {
+                    i > 0 && expression[i - 1] !in operators && expression[i - 1] != ')' && expression[i - 1] != '(' -> throw IllegalArgumentException(
+                        Message.exceptionErrorBeforeOpenBracket.message
+                    )
+
+                    i == expression.length - 1 -> throw IllegalArgumentException(Message.exceptionOpenBracketLast.message)
+                    !expression[i + 1].isDigit() -> throw IllegalArgumentException(Message.exceptionNotNumberAfterOpenBracket.message)
+                }
+
             }
         }
         if (!rightBracketSubsequence.empty())
-            return AllCalculationException.exceptionWrongBracketSubsequence.message
-        return "Ok"
+            throw IllegalArgumentException(Message.exceptionWrongBracketSubsequence.message)
     }
 
     fun convertToPostfixState(expression: String): String {
@@ -125,39 +129,32 @@ class Calculator {
         var currNumber = 0.0
         var leftOperand = 0.0
         var rightOperand = 0.0
-        var checkExpression = parser.checkExpression(expression)
+        parser.checkExpression(expression)
 
         simpleCalculator.addOperation('+') { a, b -> a + b }
         simpleCalculator.addOperation('-') { a, b -> a - b }
         simpleCalculator.addOperation('*') { a, b -> a * b }
         simpleCalculator.addOperation('/') { a, b -> a / b }
 
-
-        if (checkExpression == "Ok") {
-            postfixExpression = parser.convertToPostfixState(expression)
-            for ((i, el) in postfixExpression.withIndex()) {
-                if (el.isDigit()) {
-                    currNumber *= 10
-                    currNumber += el.toString().toInt()
-                } else if (el == ' ') {
-                    if (i > 0 && postfixExpression[i - 1].isDigit()) {
-                        stack.push(currNumber)
-                        currNumber = 0.0
-                    }
-                } else {
-                    rightOperand = stack.peek()
-                    stack.pop()
-                    leftOperand = stack.peek()
-                    stack.pop()
-                    if (rightOperand == 0.0 && el == '/')
-                        throw ArithmeticException(AllCalculationException.exceptionNullDivide.message)
-                    stack.push(simpleCalculator.execute(el, leftOperand, rightOperand))
+        postfixExpression = parser.convertToPostfixState(expression)
+        for ((i, el) in postfixExpression.withIndex()) {
+            if (el.isDigit()) {
+                currNumber *= 10
+                currNumber += el.toString().toInt()
+            } else if (el == ' ') {
+                if (i > 0 && postfixExpression[i - 1].isDigit()) {
+                    stack.push(currNumber)
+                    currNumber = 0.0
                 }
+            } else {
+                rightOperand = stack.peek()
+                stack.pop()
+                leftOperand = stack.peek()
+                stack.pop()
+                if (rightOperand == 0.0 && el == '/')
+                    throw ArithmeticException(Message.exceptionNullDivide.message)
+                stack.push(simpleCalculator.execute(el, leftOperand, rightOperand))
             }
-        } else {
-            if (checkExpression == AllCalculationException.exceptionNullDivide.message)
-                throw ArithmeticException(checkExpression)
-            throw IOException(checkExpression)
         }
 
         return stack.peek()
