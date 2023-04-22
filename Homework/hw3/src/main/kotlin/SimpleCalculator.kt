@@ -5,18 +5,18 @@ import java.util.Stack
 import java.lang.IllegalArgumentException
 
 enum class Message(val message: String) {
-    exceptionFirstNotNumber("Не может операция стоять на первом месте"),
-    exceptionErrorBeforOperaion("Не может идти перед операцией что-то кроме числа и закрывающей скобки"),
-    exceptionLastOperation("Не может операция идти последней"),
-    exceptionErrorAfterOperation("Не может идти после операции что-то кроме числа и открывающей скобки"),
-    exceptionNullDivide("Нельзя делить на нуль"),
-    exceptionWrongBracketSubsequence("Неправильная скобочная последовательность"),
-    exceptionCloseBracketOnFirstPosition("Не может закрывающая скобка стоять на первом месте"),
-    exceptionNotNumberBeforeCloseBracket("Не может перед закрывающей скобкой стоять не цифра"),
-    exceptionErrorAfterCloseBracket("После закрывающей скобки должна быть операция, либо другая скобка"),
-    exceptionErrorBeforeOpenBracket("Не может перед открывающей скобки стоять не операция и не скобка"),
-    exceptionOpenBracketLast("Не может открывающая скобка стоять последней"),
-    exceptionNotNumberAfterOpenBracket("Не может после открывающей скобки стоять не цифра")
+    EXCEPTION_FIRST_NOT_NUMBER("Не может операция стоять на первом месте"),
+    EXCEPTION_ERROR_BEFORE_OPERATION("Не может идти перед операцией что-то кроме числа и закрывающей скобки"),
+    EXCEPTION_LAST_OPERATION("Не может операция идти последней"),
+    EXCEPTION_ERROR_AFTER_OPERATION("Не может идти после операции что-то кроме числа и открывающей скобки"),
+    EXCEPTION_NULL_DIVIDE("Нельзя делить на нуль"),
+    EXCEPTION_WRONG_BRACKET_SUBSEQUENCE("Неправильная скобочная последовательность"),
+    EXCEPTION_CLOSE_BRACKET_ON_FIRST_POSITION("Не может закрывающая скобка стоять на первом месте"),
+    EXCEPTION_NOT_NUMBER_BEFORE_CLOSE_BRACKET("Не может перед закрывающей скобкой стоять не цифра"),
+    EXCEPTION_ERROR_AFTER_CLOSE_BRACKET("После закрывающей скобки должна быть операция, либо другая скобка"),
+    EXCEPTION_ERROR_BEFORE_OPEN_BRACKET("Не может перед открывающей скобки стоять не операция и не скобка"),
+    EXCEPTION_OPEN_BRACKET_LAST("Не может открывающая скобка стоять последней"),
+    EXCEPTION_NOT_NUMBER_AFTER_OPEN_BRACKET("Не может после открывающей скобки стоять не цифра")
 }
 
 class SimpleCalculator : Executor {
@@ -39,47 +39,47 @@ class Parser {
         for ((i, el) in expression.withIndex()) {
             if (el in operators) {
                 when {
-                    i == 0 -> throw IllegalArgumentException(Message.exceptionFirstNotNumber.message)
+                    i == 0 -> throw IllegalArgumentException(Message.EXCEPTION_FIRST_NOT_NUMBER.message)
                     !expression[i - 1].isDigit() && expression[i - 1] != ')' -> throw IllegalArgumentException(
-                        Message.exceptionErrorBeforOperaion.message
+                        Message.EXCEPTION_ERROR_BEFORE_OPERATION.message
                     )
 
-                    i == expression.length - 1 -> throw IllegalArgumentException(Message.exceptionLastOperation.message)
+                    i == expression.length - 1 -> throw IllegalArgumentException(Message.EXCEPTION_LAST_OPERATION.message)
                     !expression[i + 1].isDigit() && expression[i + 1] != '(' -> throw IllegalArgumentException(
-                        Message.exceptionErrorAfterOperation.message
+                        Message.EXCEPTION_ERROR_AFTER_OPERATION.message
                     )
 
-                    el == '/' && expression[i + 1] == '0' -> throw ArithmeticException(Message.exceptionNullDivide.message)
+                    el == '/' && expression[i + 1] == '0' -> throw ArithmeticException(Message.EXCEPTION_NULL_DIVIDE.message)
                 }
             }
             if (el == ')') {
                 when {
-                    rightBracketSubsequence.empty() -> throw IllegalArgumentException(Message.exceptionWrongBracketSubsequence.message)
-                    rightBracketSubsequence.peek() != '(' -> throw IllegalArgumentException(Message.exceptionWrongBracketSubsequence.message)
+                    rightBracketSubsequence.empty() -> throw IllegalArgumentException(Message.EXCEPTION_WRONG_BRACKET_SUBSEQUENCE.message)
+                    rightBracketSubsequence.peek() != '(' -> throw IllegalArgumentException(Message.EXCEPTION_WRONG_BRACKET_SUBSEQUENCE.message)
                     rightBracketSubsequence.peek() == '(' -> rightBracketSubsequence.pop()
-                    i == 0 -> throw IllegalArgumentException(Message.exceptionCloseBracketOnFirstPosition.message)
+                    i == 0 -> throw IllegalArgumentException(Message.EXCEPTION_CLOSE_BRACKET_ON_FIRST_POSITION.message)
                     i < expression.length - 1 && expression[i - 1] !in operators && expression[i - 1] != ')' && expression[i - 1] != '(' -> throw IllegalArgumentException(
-                        Message.exceptionErrorAfterCloseBracket.message
+                        Message.EXCEPTION_ERROR_AFTER_CLOSE_BRACKET.message
                     )
 
-                    i > 0 && !expression[i - 1].isDigit() -> throw IllegalArgumentException(Message.exceptionNotNumberBeforeCloseBracket.message)
+                    i > 0 && !expression[i - 1].isDigit() -> throw IllegalArgumentException(Message.EXCEPTION_NOT_NUMBER_BEFORE_CLOSE_BRACKET.message)
                 }
             }
             if (el == '(') {
                 rightBracketSubsequence.push(el)
                 when {
                     i > 0 && expression[i - 1] !in operators && expression[i - 1] != ')' && expression[i - 1] != '(' -> throw IllegalArgumentException(
-                        Message.exceptionErrorBeforeOpenBracket.message
+                        Message.EXCEPTION_ERROR_BEFORE_OPEN_BRACKET.message
                     )
 
-                    i == expression.length - 1 -> throw IllegalArgumentException(Message.exceptionOpenBracketLast.message)
-                    !expression[i + 1].isDigit() -> throw IllegalArgumentException(Message.exceptionNotNumberAfterOpenBracket.message)
+                    i == expression.length - 1 -> throw IllegalArgumentException(Message.EXCEPTION_OPEN_BRACKET_LAST.message)
+                    !expression[i + 1].isDigit() -> throw IllegalArgumentException(Message.EXCEPTION_NOT_NUMBER_AFTER_OPEN_BRACKET.message)
                 }
 
             }
         }
         if (!rightBracketSubsequence.empty())
-            throw IllegalArgumentException(Message.exceptionWrongBracketSubsequence.message)
+            throw IllegalArgumentException(Message.EXCEPTION_WRONG_BRACKET_SUBSEQUENCE.message)
     }
 
     fun convertToPostfixState(expression: String): String {
@@ -152,7 +152,7 @@ class Calculator {
                 leftOperand = stack.peek()
                 stack.pop()
                 if (rightOperand == 0.0 && el == '/')
-                    throw ArithmeticException(Message.exceptionNullDivide.message)
+                    throw ArithmeticException(Message.EXCEPTION_NULL_DIVIDE.message)
                 stack.push(simpleCalculator.execute(el, leftOperand, rightOperand))
             }
         }
