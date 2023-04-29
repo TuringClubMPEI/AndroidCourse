@@ -15,10 +15,10 @@ class StorageOfHomeFurniture : Storage {
         numberOfClosets += addNumberClosets
     }
 
-    override fun removeFurniture(sellNumberTables: Int, sellNumberChairs: Int, sellNumberClosets: Int) {
-        numberOfTables -= sellNumberTables
-        numberOfChairs -= sellNumberChairs
-        numberOfClosets -= sellNumberClosets
+    override fun removeFurniture(removeNumberTables: Int, removeNumberChairs: Int, removeNumberClosets: Int) {
+        numberOfTables -= removeNumberTables
+        numberOfChairs -= removeNumberChairs
+        numberOfClosets -= removeNumberClosets
     }
 
     override fun outputCurrentQuantity() {
