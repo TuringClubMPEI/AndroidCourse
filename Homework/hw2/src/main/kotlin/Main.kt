@@ -1,48 +1,45 @@
 fun main() {
-    val ikeaWhiteDacha = IkeaRussia("Диван", "Стол", 5, 10) //создаем объект поставщика#1
-    val leMerlinMoscow = LeMerlinRussia("Шкаф", 11)//создаем объект поставщика #2
+    val agreeAnswer = "ДА"
     val localStorage = StorageOfHomeFurniture() //создаем объект склада
-    localStorage.outputCurrentQuantity( //смотрим содержимое склада
-        ikeaWhiteDacha.getNameOfFurnitureType1(),
-        ikeaWhiteDacha.getNameOfFurnitureType2(),
-        leMerlinMoscow.getNameOfFurnitureType3()
-    )
-    ikeaWhiteDacha.deliveryTimetable() //расписание доставки, метод-пустышка
-    ikeaWhiteDacha.calcDeliveryCost() //расчет стоимости доставки
-    ikeaWhiteDacha.outputFurniture() //инфо о доставке на склад
-
-    leMerlinMoscow.deliveryTimetable() //расписание доставки, метод-пустышка
-    leMerlinMoscow.calcDeliveryCost() //расчет стоимости доставки
-    leMerlinMoscow.outputFurniture() //инфо о доставке на склад
-
-    localStorage.addFurniture( //добавляем на склад мебель
-        ikeaWhiteDacha.getQuantity1(), ikeaWhiteDacha.getQuantity2(), leMerlinMoscow.getQuantity3()
-    )
-    localStorage.outputCurrentQuantity( //смотрим содержимое склада
-        ikeaWhiteDacha.getNameOfFurnitureType1(),
-        ikeaWhiteDacha.getNameOfFurnitureType2(),
-        leMerlinMoscow.getNameOfFurnitureType3()
-    )
-    val furnitureHouse = HomeFurniture() //создаем объект магазина
-    furnitureHouse.sell() //продаем в магазине мебель
-    localStorage.removeFurniture( //раз продали, то на складе стало меньше мебели, логично
-        furnitureHouse.getSellNum1(), furnitureHouse.getSellNum2(), furnitureHouse.getSellNum3()
-    )
-    localStorage.outputCurrentQuantity(
-        ikeaWhiteDacha.getNameOfFurnitureType1(),
-        ikeaWhiteDacha.getNameOfFurnitureType2(),
-        leMerlinMoscow.getNameOfFurnitureType3()
-    )
-    ikeaWhiteDacha.bringFurniture()
-    leMerlinMoscow.bringFurniture()
+    localStorage.outputCurrentQuantity()
+    println("Ваш склад расположен за пределами МКАД?")
+    val answer = readln()
+    var distance = 0
+    if (answer.uppercase() == agreeAnswer) {
+        println("Укажите расстояние до МКАДа:")
+        distance = readln().toInt()
+    }
+    println("Сколько столов привезет 1-ый поставщик на склад?")
+    var addNumberOfTables = readln().toInt()
+    println("Сколько стульев привезет 1-ый поставщик на склад?")
+    var addNumberOfChairs = readln().toInt()
+    println("Сколько шкафов привезет 2-ый поставщик на склад?")
+    var addNumberOfClosets = readln().toInt()
+    val ikeaMoscow = IkeaRussia(addNumberOfChairs, addNumberOfTables) //создали объект первого поставщика
+    ikeaMoscow.calcDeliveryCost(answer, distance)
+    val leMerlinMoscow = LeMerlinRussia(addNumberOfClosets)// создали объект второго поставщика
+    leMerlinMoscow.calcDeliveryCost(answer, distance)
     localStorage.addFurniture(
-        ikeaWhiteDacha.getQuantity1(),
-        ikeaWhiteDacha.getQuantity2(),
-        leMerlinMoscow.getQuantity3()
+        ikeaMoscow.quantityOfTables,
+        ikeaMoscow.quantityOfChairs,
+        leMerlinMoscow.quantityOfClosets
     )
-    localStorage.outputCurrentQuantity(
-        ikeaWhiteDacha.getNameOfFurnitureType1(),
-        ikeaWhiteDacha.getNameOfFurnitureType2(),
-        leMerlinMoscow.getNameOfFurnitureType3()
-    )
+    localStorage.outputCurrentQuantity()
+    val cozyHome = HomeFurniture(localStorage) //создаем объект магазина
+    println("Сколько столов желаете приобрести?")
+    var sellNumberOfTables = readln().toInt()
+    println("Сколько стульев желаете приобрести?")
+    var sellNumberOfChairs = readln().toInt()
+    println("Сколько шкафов желаете приобрести?")
+    var sellNumberOfClosets = readln().toInt()
+    cozyHome.sell(sellNumberOfChairs, sellNumberOfTables, sellNumberOfClosets)
+    localStorage.outputCurrentQuantity()
+    println("Сколько столов привезет 1-ый поставщик на склад?")
+    addNumberOfTables = readln().toInt()
+    println("Сколько стульев привезет 1-ый поставщик на склад?")
+    addNumberOfChairs = readln().toInt()
+    println("Сколько шкафов привезет 2-ый поставщик на склад?")
+    addNumberOfClosets = readln().toInt()
+    localStorage.addFurniture(addNumberOfTables, addNumberOfChairs, addNumberOfClosets)
+    localStorage.outputCurrentQuantity()
 }

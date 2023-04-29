@@ -1,27 +1,27 @@
 interface Storage {
-    fun addFurniture(num1: Int, num2: Int, num3: Int)
-    fun removeFurniture(num1: Int, num2: Int, num3: Int)
-    fun outputCurrentQuantity(type1: String, type2: String, type3: String)
+    fun addFurniture(addNumberTables: Int, addNumberChairs: Int, addNumberClosets: Int)
+    fun removeFurniture(removeNumberTables: Int, removeNumberChairs: Int, removeNumberClosets: Int)
+    fun outputCurrentQuantity()
 
 }
 
 class StorageOfHomeFurniture : Storage {
-    private var numberOfItem1: Int = 0
-    private var numberOfItem2: Int = 0
-    private var numberOfItem3: Int = 0
-    override fun addFurniture(num1: Int, num2: Int, num3: Int) {
-        numberOfItem1 += num1
-        numberOfItem2 += num2
-        numberOfItem3 += num3
+    private var numberOfTables: Int = 0
+    private var numberOfChairs: Int = 0
+    private var numberOfClosets: Int = 0
+    override fun addFurniture(addNumberTables: Int, addNumberChairs: Int, addNumberClosets: Int) {
+        numberOfTables += addNumberTables
+        numberOfChairs += addNumberChairs
+        numberOfClosets += addNumberClosets
     }
 
-    override fun removeFurniture(num1: Int, num2: Int, num3: Int) {
-        numberOfItem1 -= num1
-        numberOfItem2 -= num2
-        numberOfItem3 -= num3
+    override fun removeFurniture(sellNumberTables: Int, sellNumberChairs: Int, sellNumberClosets: Int) {
+        numberOfTables -= sellNumberTables
+        numberOfChairs -= sellNumberChairs
+        numberOfClosets -= sellNumberClosets
     }
 
-    override fun outputCurrentQuantity(type1: String, type2: String, type3: String) {
-        println("На складе сейчас находятся:\n$numberOfItem1---$type1\n$numberOfItem2---$type2\n$numberOfItem3---$type3")
+    override fun outputCurrentQuantity() {
+        println("На складе сейчас находятся:\n$numberOfTables---Столы\n$numberOfChairs---Стулья\n$numberOfClosets---Шкафы")
     }
 }
