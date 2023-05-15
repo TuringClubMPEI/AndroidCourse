@@ -5,10 +5,12 @@ interface Storage {
 
 }
 
-class StorageOfHomeFurniture : Storage {
-    private var numberOfTables: Int = 0
-    private var numberOfChairs: Int = 0
+class StorageOfHomeFurniture(
+    private var numberOfTables: Int = 0,
+    private var numberOfChairs: Int = 0,
     private var numberOfClosets: Int = 0
+) : Storage {
+
     override fun addFurniture(addNumberTables: Int, addNumberChairs: Int, addNumberClosets: Int) {
         numberOfTables += addNumberTables
         numberOfChairs += addNumberChairs

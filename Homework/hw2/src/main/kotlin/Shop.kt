@@ -1,11 +1,11 @@
 interface Shop {
-    fun sell(sellChairs: Int, sellTables: Int, sellCloset: Int)
+    fun sell(chairsToSell: Int, tablesToSell: Int, closetsToSell: Int)
 }
 
 class HomeFurniture(private val storage: Storage) : Shop {
 
-    override fun sell(sellChairs: Int, sellTables: Int, sellCloset: Int) {
-        storage.removeFurniture(sellTables, sellChairs, sellCloset)
+    override fun sell(chairsToSell: Int, tablesToSell: Int, closetsToSell: Int) {
+        storage.removeFurniture(tablesToSell, chairsToSell, closetsToSell)
     }
 
 }

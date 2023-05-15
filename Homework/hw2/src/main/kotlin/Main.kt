@@ -2,6 +2,8 @@ fun main() {
     val agreeAnswer = "ДА"
     val localStorage = StorageOfHomeFurniture() //создаем объект склада
     localStorage.outputCurrentQuantity()
+    println("LeMerlin: В пределах МКАД доставка - 450 рублей, за каждый километр от МКАДа добавляется 35 рублей")
+    println("Ikea: В пределах МКАД доставка - 300 рублей, за каждый километр от МКАДа добавляется 70 рублей")
     println("Ваш склад расположен за пределами МКАД?")
     val answer = readln()
     var distance = 0
@@ -16,9 +18,9 @@ fun main() {
     println("Сколько шкафов привезет 2-ый поставщик на склад?")
     var addNumberOfClosets = readln().toInt()
     val ikeaMoscow = IkeaRussia(addNumberOfChairs, addNumberOfTables) //создали объект первого поставщика
-    ikeaMoscow.calcDeliveryCost(answer, distance)
+    println("Доставка от Ikea Moscow обойдется в ${ikeaMoscow.calcDeliveryCost(answer, distance)} рублей")
     val leMerlinMoscow = LeMerlinRussia(addNumberOfClosets)// создали объект второго поставщика
-    leMerlinMoscow.calcDeliveryCost(answer, distance)
+    println("Доставка от LeMerlinMoscow обойдется в ${leMerlinMoscow.calcDeliveryCost(answer, distance)} рублей")
     localStorage.addFurniture(
         ikeaMoscow.quantityOfTables,
         ikeaMoscow.quantityOfChairs,
