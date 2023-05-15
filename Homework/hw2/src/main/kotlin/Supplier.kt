@@ -1,22 +1,31 @@
-/**
- * Интерфейс для поставщика
- * При помощи него поставщик взаимодействует со складом
- * Здесь можно определять только методы, общие для обоих поставщиков
- */
 interface Supplier {
-
-    /**
-     * Пример метода, который может быть в интерфейсе поставщика
-     * Нужно добавить еще несколько методов
-     */
-    fun getFurniture()
+    fun calcDeliveryCost(answer: String, distance: Int): Int//расчет стоимости доставки
 }
 
-/**
- * Пример реализации для создания класса поставщика
- * class MoscowFurniture : Supplier {
- *     override fun getFurniture() {
- *     // написать специфическую реализацию
- *     }
- * }
- */
+
+class IkeaRussia(
+    val quantityOfChairs: Int, //кол-во доставляемых стульев
+    val quantityOfTables: Int, //кол-во доставляемых столов
+) : Supplier {
+
+
+    override fun calcDeliveryCost(answer: String, distance: Int): Int {
+        var finalCost = 300
+        if (distance != 0) {
+            finalCost += distance * 70
+        }
+        return finalCost
+    }
+}
+
+class LeMerlinRussia(
+    val quantityOfClosets: Int
+) : Supplier {
+    override fun calcDeliveryCost(answer: String, distance: Int): Int {
+        var finalCost = 450
+        if (distance != 0) {
+            finalCost += distance * 35
+        }
+        return finalCost
+    }
+}
